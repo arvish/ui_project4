@@ -1,79 +1,93 @@
 <script lang="ts">
-	let modules = [
-		{ title: "Budget Basics", desc: "Beginner Level", href: "/lesson", unlocked: true },
-		{ title: "Credit Score 101", desc: "Coming Soon", unlocked: false },
-		{ title: "Interest & Loans", desc: "Coming Soon", unlocked: false },
-		{ title: "Saving & Investing", desc: "Coming Soon", unlocked: false }
+	type ModuleId = 'budget' | 'credit' | 'loans' | 'investing';
+
+	type ModuleCard = {
+		id: ModuleId;
+		title: string;
+		subtitle: string;
+	};
+
+	const modules: ModuleCard[] = [
+		{ id: 'budget', title: 'Budget Basics', subtitle: 'Beginner Level' },
+		{ id: 'credit', title: 'Credit Score 101', subtitle: 'Coming Soon' },
+		{ id: 'loans', title: 'Interest & Loans', subtitle: 'Coming Soon' },
+		{ id: 'investing', title: 'Saving & Investing', subtitle: 'Coming Soon' }
 	];
+
+	function openModule(id: ModuleId) {
+		window.location.href = `/lesson/${id}`;
+	}
 </script>
 
-<div class="container">
-    <h1>FinanceLing</h1>
-    <p class="subtitle">A simple daily financial literacy trainer.</p>
+<div class="home">
+	<header class="hero">
+		<h1>FinanceLing</h1>
+		<p>A simple daily financial literacy trainer.</p>
+	</header>
 
-    <div class="grid">
-        {#each modules as m}
-            <div 
-                class="card {m.unlocked ? 'active' : 'locked'}"
-                on:click={() => m.unlocked && m.href && (window.location.href = m.href)}
-            >
-                <h3>{m.title}</h3>
-                <p>{m.desc}</p>
-            </div>
-        {/each}
-    </div>
+	<section class="modules">
+		{#each modules as m}
+			<div class="card" on:click={() => openModule(m.id)}>
+				<h3>{m.title}</h3>
+				<p>{m.subtitle}</p>
+			</div>
+		{/each}
+	</section>
 </div>
 
 <style>
-.container {
-    text-align: center;
-    color: white;
-}
+	.home {
+		text-align: center;
+		color: #f9fafb;
+		padding-top: 3rem;
+	}
 
-h1 {
-    font-size: 2.6rem;
-    font-weight: 700;
-}
+	.hero h1 {
+		font-size: 2.6rem;
+		font-weight: 700;
+		margin: 0;
+	}
 
-.subtitle {
-    margin-top: -0.5rem;
-    margin-bottom: 3rem;
-    color: #b4c2d8;
-}
+	.hero p {
+		margin-top: 0.4rem;
+		margin-bottom: 2.8rem;
+		color: #9ca3af;
+	}
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-}
+	.modules {
+		max-width: 960px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1.75rem;
+		justify-items: center;
+	}
 
-.card {
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.04);
-    border-radius: 14px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
-    transition: 0.2s ease;
-}
+	.card {
+		width: 230px;
+		padding: 1.5rem 1.3rem;
+		background: #111827;
+		border-radius: 16px;
+		box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+		cursor: pointer;
+		transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+		text-align: left;
+	}
 
-.card.active:hover {
-    background: rgba(255,255,255,0.12);
-    cursor: pointer;
-}
+	.card:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
+		background: #101725;
+	}
 
-.card.locked {
-    opacity: 0.4;
-    cursor: default;
-}
+	.card h3 {
+		margin: 0 0 0.35rem;
+		font-size: 1.2rem;
+	}
 
-.card h3 {
-    margin: 0;
-    font-size: 1.3rem;
-}
-
-.card p {
-    margin-top: 0.3rem;
-    color: #b4c2d8;
-}
+	.card p {
+		margin: 0;
+		color: #9ca3af;
+		font-size: 0.92rem;
+	}
 </style>
