@@ -213,26 +213,85 @@
 </div>
 
 <style>
+    :global(body) {
+    background: linear-gradient(135deg, #0b1220, #0e1a2b, #102035);
+    background-size: 180% 180%;
+    animation: gradientShift 12s ease infinite;
+    margin: 0;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
 	.lesson-page {
 		display: flex;
 		justify-content: center;
 		padding: 4rem 1rem;
 	}
+    
+    .quiz-card {
+        max-width: 620px;
+        margin: 3rem auto;
+        padding: 2.4rem 2.6rem;
 
-	.quiz-card {
-		max-width: 640px;
-		width: 100%;
-		background: #111827;
-		color: #f9fafb;
-		border-radius: 18px;
-		padding: 2.5rem 2.25rem;
-		box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
-	}
+        background: rgba(255, 255, 255, 0.10);
+        backdrop-filter: blur(28px) saturate(240%);
+        -webkit-backdrop-filter: blur(28px) saturate(240%);
+        
+        border-radius: 24px;
 
-	.quiz-header h2 {
-		margin: 0 0 0.25rem;
-		font-size: 1.8rem;
-	}
+        border: 1.6px solid rgba(255, 255, 255, 0.18);
+
+        box-shadow:
+            0 22px 40px rgba(0, 0, 0, 0.55),
+            0 0 80px rgba(255, 255, 255, 0.05),
+            inset 0 0 80px rgba(255, 255, 255, 0.06);
+
+        animation: fadeIn 0.45s ease forwards;
+        transform: translateY(10px);
+        opacity: 0;
+
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease,
+            background 0.35s ease,
+            border 0.35s ease;
+    }
+
+    .quiz-card:hover {
+        transform: translateY(4px);
+
+        box-shadow:
+            0 28px 55px rgba(0, 0, 0, 0.65),
+            0 0 110px rgba(255, 255, 255, 0.10),
+            inset 0 0 100px rgba(255, 255, 255, 0.10);
+
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.24);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(10px); }
+    }
+
+	.quiz-card h2 {
+        margin: 0 0 0.6rem 0;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: #ffffff;
+    }
+
+    .quiz-card p.question-text {
+        margin: 0 0 1.8rem 0;
+        font-size: 1.1rem;
+        color: #d2d7df;
+        line-height: 1.55;
+    }
 
 	.question-counter {
 		margin: 0 0 0.75rem;
@@ -253,22 +312,48 @@
 	}
 
 	.option {
-		width: 100%;
-		padding: 1rem 1.25rem;
-		border-radius: 10px;
-		border: none;
-		background: #e5e7eb;
-		color: #111827;
-		text-align: left;
-		font-size: 1rem;
-		cursor: pointer;
-		transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
-	}
+        width: 100%;
+        padding: 1.1rem 1.3rem;
+
+        background: rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(22px) saturate(230%);
+        -webkit-backdrop-filter: blur(22px) saturate(230%);
+        border: 1.4px solid rgba(255, 255, 255, 0.22);
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 8px 26px rgba(0, 0, 0, 0.45),
+            inset 0 0 40px rgba(255, 255, 255, 0.04);
+
+        cursor: pointer;
+
+        transition:
+            transform 0.22s cubic-bezier(0.25, 0.8, 0.25, 1),
+            box-shadow 0.22s ease,
+            background 0.22s ease,
+            border 0.22s ease;
+    }
 
 	.option:hover:enabled {
-		transform: translateY(-1px);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+		transform: translateY(-6px) scale(1.018);
+
+        background: rgba(255, 255, 255, 0.22);
+        border: 1.4px solid rgba(255, 255, 255, 0.33);
+
+        box-shadow:
+            0 14px 40px rgba(0, 0, 0, 0.55),
+            0 0 18px rgba(255, 255, 255, 0.18),
+            inset 0 0 50px rgba(255, 255, 255, 0.08);
 	}
+
+    .option.selected {
+        background: rgba(76, 132, 255, 0.28);
+        border-color: rgba(142, 178, 255, 0.55);
+        box-shadow:
+            0 14px 40px rgba(46, 110, 255, 0.45),
+            inset 0 0 60px rgba(255,255,255,0.12);
+    }
 
 	.option:disabled {
 		cursor: default;
