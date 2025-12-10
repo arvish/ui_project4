@@ -1,0 +1,83 @@
+/* GLOBAL BACKGROUND (fixes half-blue bug) */
+body {
+    background: #0f172a !important; /* slate-900 */
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+}
+
+/* Center all pages automatically */
+main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* QUIZ CARD */
+.quiz-card {
+    background: #1e293b; /* slate-800 */
+    padding: 2rem;
+    border-radius: 12px;
+    width: 480px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* Question spacing */
+.quiz-card h2 {
+    margin-bottom: 0.5rem;
+}
+
+.quiz-card p {
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+}
+
+/* OPTION BUTTON FIXES */
+.quiz-option {
+    all: unset;
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: #e2e8f0; /* light slate */
+    color: #0f172a; /* dark text */
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.quiz-option:hover {
+    background: #cbd5e1;
+}
+
+/* Correct / Wrong */
+.quiz-option.correct {
+    background: #16a34a; /* green-600 */
+    color: white;
+    border-color: #15803d;
+}
+
+.quiz-option.wrong {
+    background: #dc2626; /* red-600 */
+    color: white;
+    border-color: #b91c1c;
+}
+
+/* NEXT BUTTON */
+.next-btn {
+    margin-top: 1rem;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #3b82f6;
+    color: white;
+    font-size: 1rem;
+}
+
+.next-btn:hover {
+    background: #2563eb;
+}

@@ -1,118 +1,115 @@
 <script lang="ts">
-	import { questions } from "./questions";
+    let index: number = 0;
+    let selected: number | null = null;
+    let show = false;
 
-	let index = 0;
-	let selected: number | null = null;
-	let showAnswer = false;
+    const questions = [
+        {
+            text: "Which of these is a fixed monthly expense?",
+            options: [
+                { text: "Streaming subscription", correct: true },
+                { text: "Groceries", correct: false },
+                { text: "Buying clothes", correct: false }
+            ]
+        },
+        {
+            text: "What does APR stand for?",
+            options: [
+                { text: "Annual Percentage Rate", correct: true },
+                { text: "Average Personal Revenue", correct: false },
+                { text: "Adjusted Payment Ratio", correct: false }
+            ]
+        }
+    ];
 
-	function selectOption(i: number) {
-		if (!showAnswer) {
-			selected = i;
-			showAnswer = true;
-		}
-	}
+    function choose(i: number) {
+        selected = i;
+        show = true;
+    }
 
-	function next() {
-		if (index < questions.length - 1) {
-			index++;
-			selected = null;
-			showAnswer = false;
-		} else {
-			window.location.href = "/complete";
-		}
-	}
+    function next() {
+        if (index < questions.length - 1) {
+            index++;
+            selected = null;
+            show = false;
+        } else {
+            window.location.href = "/complete";
+        }
+    }
 </script>
 
-<div class="container">
-	<div class="quiz-card">
-		<h2>Question {index + 1} of {questions.length}</h2>
-		<p class="question">{questions[index].text}</p>
+<div class="quiz-box">
+    <h2>Question {index + 1} of {questions.length}</h2>
+    <p class="qtext">{questions[index].text}</p>
 
-		<div class="options">
-			{#each questions[index].options as opt, i}
-				<div
-					class="option"
-					class:correct={selected === i && showAnswer && opt.correct}
-					class:wrong={selected === i && showAnswer && !opt.correct}
-					on:click={() => selectOption(i)}
-				>
-					{opt.text}
-				</div>
-			{/each}
-		</div>
+    <div class="options">
+        {#each questions[index].options as opt, i}
+            <button
+                class="option"
+                style="background: {selected === i && show ? (opt.correct ? '#4CAF50' : '#ca3b3b') : '#e7ecf3'}"
+                on:click={() => choose(i)}
+            >
+                {opt.text}
+            </button>
+        {/each}
+    </div>
 
-		{#if showAnswer}
-			<button class="next" on:click={next}>Next</button>
-		{/if}
-	</div>
+    {#if show}
+        <button class="next-btn" on:click={next}>Next</button>
+    {/if}
 </div>
 
 <style>
-	.container {
-		display: flex;
-		justify-content: center;
-		margin-top: 4rem;
+.quiz-box {
+    width: 480px;
+    background: #162032;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.4);
+    text-align: left;
+    color: white;
 	}
 
-	.quiz-card {
-		background: white;
-		padding: 2rem;
-		border-radius: 16px;
-		max-width: 520px;
-		width: 90%;
-		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-		text-align: center;
+	h2 {
+		margin-bottom: 0.5rem;
 	}
 
-	.question {
-		margin: 1rem 0 1.5rem 0;
-		font-size: 1.1rem;
-		color: #333;
-	}
-
-	.options {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		margin-bottom: 1rem;
+	.qtext {
+		margin-bottom: 1.5rem;
+		color: #d2d9e6;
 	}
 
 	.option {
-		padding: 0.9rem;
+		width: 100%;
+		padding: 1rem;
 		border-radius: 10px;
-		background: #f7f7f7;
-		border: 1px solid #ddd;
+		border: none;
+		margin-bottom: 0.7rem;
 		cursor: pointer;
+		text-align: left;
+		font-size: 1rem;
 		transition: 0.2s;
+		background: #e7ecf3;
+		color: #1a1f27;   /* <-- THIS FIXES THE WHITE TEXT PROBLEM */
 	}
+
 
 	.option:hover {
-		background: #efefef;
+		transform: translateY(-2px);
 	}
 
-	.option.correct {
-		background: #d4f7d0;
-		border-color: #8ad68a;
-	}
-
-	.option.wrong {
-		background: #f5bcbc;
-		border-color: #d48080;
-	}
-
-	.next {
+	.next-btn {
 		margin-top: 1rem;
-		padding: 0.7rem 1.6rem;
+		padding: 0.8rem 1.6rem;
 		border-radius: 8px;
 		border: none;
-		background: #4b8cff;
+		background: #4f7cff;
 		color: white;
 		cursor: pointer;
 		font-size: 1rem;
-		transition: 0.2s ease;
 	}
 
-	.next:hover {
-		background: #3c77e6;
+	.next-btn:hover {
+		background: #6b93ff;
 	}
 </style>
